@@ -1,0 +1,118 @@
+ >>>>>>>>>>>>>>>>>>>> Jupyter (Anaconda) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>> Shift + Enter ---> Run code in jupyter
+>> # Level 1 Heading , ####### Level 6 Heading
+>> 4 Types of Cells in Jupyter ( Code, Markdown, Heading, Raw etc )
+>> python -m notebook ---> Run this command in cmd while cmd opening in that dir ---> For using jupyter installed in python lib
+>> https://www.youtube.com/watch?v=41BBPoce4uo&ab_channel=RaptorAnalytics
+>> Jupyter Shortucts & Edit Shortcuts ----> On Dashboard click on Help menu option
+
+>>>>>>>>>>>>>>>>>>>> MACHINE LEARNING COURSE (DEEP LEARNING AI CHANNEL) <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+>> TYPES OF ML ---> Supervised ML(use mostly in real world app) and Unsupervised ML
+
+>> SUPERVISED ML ===> input(x) -> output(y) --> (Right answers are known already)   -->  Example --> House Price Prediction 
+>> Types of Supervised Learning: 
+	(Regression --> Infinite no. of Outputs, And output will be Numeric ), 
+        (Classification --> Breast Cancer Detection --> Finite no.of output ) --> Classification predicts categories which can be non-numeric and more than one or two
+	
+>> UNSUPERVISED ML ===> To take the data set and find some interesting things or structure (To make groups or cluster) --> 
+>> Types: Example --> Google News of Pandas ( Right answer is not known in advance ) ---> Data is without labeling  ----> One of its type is Clustering --> 
+   Other are Anomoly Detection ( To detect unusual events ) and other one is Dimensionality Reduction ( To compress a large data set to a smaller )
+
+>> NOTATIONS:
+   Training Set ---> Data graph or table which is given to machine to learn
+   x --> Input or Feature
+   y --> Output or Target
+   m --> Total no. of traning examples
+   (x,y) ---> Single training example
+   (x(exp-sub)i,y(exp-sub)i) ---> Particular training example in ith row (like record) (exp = exponential) (i = index)
+   sub ==> Subscript
+
+>> UNIVARIANT LINEAR REGRESSION ---> One Variable Linear Regression
+   f = function / hypothesis --> f is called Model	
+   w,b ==> Parameters / Coefficients / Weights
+   y^ = output / prediction ---> Conventionally y^ (y hat) is prediction or estimation for y (actual target / output value)
+   f(sub w b)(x) = wx + b -----> w on x-axis and b on y-axis -----> model training function
+
+   w: Weight or coefficient for the independent variable. This value represents the slope of the linear relationship between the independent variable and the 
+   	dependent variable. It determines how much the dependent variable (often denoted as y) changes for a unit change in the independent variable.
+   b: Bias term, also known as the intercept or constant. This is the value of the dependent variable 
+	y when the independent variable x is zero. It represents the y-intercept of the linear equation and the value of y when there is no contribution from x.     
+   In univariate linear regression, you are trying to find the best values for w and b that minimize the error between the predicted values and the actual values 
+	in your dataset. 
+	
+   y --> Original Output(That is obtained when e.g the House is sold) and y^ is estimated output ( Guess after drawing line using Regression)
+
+>> COST FUNCTION (J) / MEAN SQUARE ERROR FUNCTION: 
+	J(w, b) = sum from 0 to m ( y^ - y(exp-sub i))^2 = error for Ith instance ===> To find average error divide it by 
+   	m (total # of trining examples) or by 2m as use in ML to get better results ---> >>>> Lecture 12 <<<<
+	>> f_w(x) --> For fixed w it is function of input feature x. J(w) ---> Function of parameter w
+
+>> FUNCTION TO CALCULATE THE COST IN LABS:
+	def compute_cost(x, y, w, b): 
+   		m = x.shape[0] 
+    		cost = 0
+    		for i in range(m):
+        		f_wb = w * x[i] + b
+        		cost = cost + (f_wb - y[i])**2
+    		total_cost = 1 / (2 * m) * cost
+    		return total_cost
+
+>> MINIMIZE ( w OF b) WHICH IS COST FUNCTION:
+   >> "min" stands for "minimum," indicating that you are trying to find the smallest possible value of something.
+   >> "w" often represents the weights in a machine learning or optimization context. These weights are numerical values associated with the input features or 
+    neurons in a neural network. The cost function depends on these weights, and you want to find the set of weights that minimizes the cost function.
+   >> "b" usually represents "BIASES" in machine learning. Biases are additional parameters in a model that allow it to fit data more flexibly. Like weights, biases 
+    also affect the cost function, and you want to find the biases that result in the minimum cost.
+ 
+	>> First we take b=0 to determine the values of J(w) which is Mean Square Error Function for different values of w ==> This will help to find the w value 
+	which best fits the data ==> When there was only "w", the J(w) was simply a u-shaped/parabole type curve.
+
+	>> Then we take b!=0 to determine the values of J(w) which is Mean Square Error Function for different values of w and b ==> This will help to find the w and b value 
+	which best fits the data ==> When there was only "w", the J(w) was simply a u-shaped/parabole type curve, but now J(w) is Bowl like shape
+
+	>> There are 2 ways to DRAW THE DATA POINTS GRAPH: 
+		1) 3D plot where height gives value of J    
+		2) Contours plot every horizontal piece is at same height. Center of all ellipses gives minimum cost function value
+
+>> GRADIENT DESCENT --> A model to minimize the cost function.It has many other uses as well.
+	>> In graph of J_w,b, it starts looking in 360 degree and go to nearest steepest point which has less cost.The lower point obtain there is LOCAL OPTIMA as
+		we can't go through that path from other hills to plain area optimally.
+	>> FORMULA ---> w = w − α * ∂/∂w J(w,b) ---> Here ALPHA (Learning Rate) means how big the step cost to hilldown.
+		>> Here PARTIAL DER is use to determine in which DIRECTION the baby step has to be taken.
+		>> For "b" --> b = b − α * ∂/∂b J(w,b)
+		>> The above two functions keep repeating until there is convergence (means you reach the local minimum where the step taken don't change
+			w and b anymore)
+	>> SIMILTANEOUS UPDATE ---> Its important to do simultaneous update of the value of "w" and "b" at one time use the previous value of "w" and "b" to run 
+		the above both functions. Not use the update value of "w" at same time in function of "b" as it is INCORRECT way.
+	>> partial der == "d" symbol
+	>> HOW PARTIAL DER HELPS IN MINIMIZE "w" ---> LECTURE#17 Gives intiution how the PARTIAL DER changes the "w" to give optimized "w" by adding and subtracing 
+		alpha times an integer from previous "w"
+	>> HOW PARTIAL DER HELPS IN MINIMIZE "ALPHA" AND CASES OF SMALL AND LARGE ALPHA ---> LECTURE#18 explains different cases of alpha value. One IMPORTANT thing
+		is that if you are already on the local minima then the GRADIENT DESCENT will not move the points as at that point TANGENT IS STRAIGHT LINE WHICH
+		HAS SLOPE=0 means ( ∂/∂w J(w)=0 ), so " w - alpha . 0 = w" 
+		>> SOLUTION OF ABOVE PROBLEM ---> Its solution is that algorithm should take large step means large alpha when it is far from local minima and becomes
+			small as it reaches near the local minima ---> It is done automatically as PARTIAL DER is large when path is more steep which is when point
+			is far from MINIMA and vice versa.
+
+>> GRADIENT DESCENT FOR LINEAR REGRESSIN (USING COST FUNCTION --> MEAN SQUARED ERROR):
+	>> LECTURE#19 gives DERIVATION/EXPLAINATION of above partial der equations.GRADIENT DESENT has more than one LOCAL MINIMA while MEAN SQUARED ERROR 
+		(Having BOWL shape also known as CONVEX FUNCTION) has only one GLOBAL MINIMA.
+	>> MSE is "bowl shaped" because its cost function is calculated using just the ACTUAL COST (y) and PREDICTED COST (y^) so it has convex shape while 
+		GRADIENT DESCENT cost function uses the "w" and "b" parameters so it gives 3D interface.
+	>> Now the input features are "w and b" but instead of taking 3D view of cost function, we take 2D view of the cost function which is convex function as it
+		is helpful in finding the GLOBAL MINIMA.
+​
+>> BATCH GRADIENT DESCENT:
+	>> LECUTURE#20 ---> Each step of gradient descent uses all the training examples to find a good global minima.
+
+>> LINEAR REGRESSION WITH MULTIPLE INPUTS:
+	NOTATIONS:
+	>> Now parameters and inputs become vectors like x^-> (read as x arrow = vector x) and w^->
+		x^-> = [x1, x2 .... xn ] ==> vector set of input features
+		w^-> = [w1,w2 .... wn] ==> vector set of parameters , b is a number not a vector element
+`		x subscript j = jth column feature
+		x superscript i = ith example
+		
+		
+
